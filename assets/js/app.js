@@ -1,5 +1,4 @@
 import '../scss/styles.scss';
-import { mapPins } from './components/mapPins';
 import { initMap } from './components/mapInit';
 import { createPinSystem } from './components/mapPins';
 
