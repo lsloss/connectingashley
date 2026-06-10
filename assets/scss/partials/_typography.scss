@@ -1,0 +1,68 @@
+/* Font Face */
+
+/* 
+  Don't include a separate name for 
+  each font style, just use the same name and
+  declare each style separately.
+  See here: http://www.newnet-soft.com/blog/csstypography
+*/
+
+@font-face {
+    font-family: 'Coaster Sans';
+    src: url('../fonts/CoasterSans/CoasterSans-Regular.woff2') format('woff2'),
+    url('../fonts/CoasterSans/CoasterSans-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Document */
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // Underlines and overlines are drawn across the full length of the text content
+  // See here: https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration-skip-ink
+  //text-decoration-skip-ink: none;
+  text-decoration-skip-ink: auto;
+}
+
+/* Headings */
+
+h1, h2, h3, h4, h5, h6 {
+  clear: both;
+  font-family: inherit;
+  margin-top: 0;
+  margin-bottom: 1em;
+  text-rendering: optimizelegibility;
+}
+
+/* Copy */
+
+p {
+    // Preserve the readability of text when font fallback occurs
+    // See here: http://www.newnet-soft.com/blog/csstypography
+    font-size-adjust: auto;
+    
+    margin-top: 0;
+    margin-bottom: 1em;
+
+    // Enable ligatures when available
+    -webkit-font-feature-settings: "liga", "dlig";
+     -moz-font-feature-settings: "liga=1, dlig=1";
+        -ms-font-feature-settings: "liga", "dlig";
+         -o-font-feature-settings: "liga", "dlig";
+            font-feature-settings: "liga", "dlig";
+  }
+
+  dfn, cite, em, i {
+    font-style: italic;
+}
+
+blockquote {
+	margin: 0 1.5em;
+}
+
+address {
+	margin: 0 0 1.5em;
+}

@@ -1,0 +1,19 @@
+a {
+	color: inherit;
+
+	&:visited {
+		color: inherit;
+	}
+	&:hover,
+	&:focus,
+	&:active {
+		color: inherit;
+	}
+	&:focus {
+		outline: thin dotted;
+	}
+	&:hover,
+	&:active {
+		outline: 0;
+	}
+}

@@ -1,0 +1,29 @@
+// GRID
+
+@mixin grid($rows, $columns, $gap) {
+    display: grid;
+    grid-template-rows: $rows;
+    grid-template-columns: $columns;
+    grid-gap: $gap;
+}
+
+@mixin flexbox($flow, $justify, $align) {
+    display: flex;
+    flex-flow: $flow;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+// TYPOGRAPHY
+
+@mixin sans-serif($weight: 400, $style: normal) {
+    font-family: "Helvetica", sans-serif;
+    font-weight: $weight;
+    font-style: $style;
+}
+
+@mixin serif($weight: 700, $style: normal) {
+    font-family: "Georgia", sans-serif;
+    font-weight: $weight;
+    font-style: $style;
+}

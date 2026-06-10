@@ -1,0 +1,54 @@
+// SPACING
+
+:root {
+    --space-s: 20px;
+    --space-m: calc(var(--space-s) * 2);
+    --space-l: calc(var(--space-s) * 3);
+}
+
+// COLORS
+
+:root {
+    --white: #FFFFFF;
+}
+
+// TYPOGRAPHY
+
+:root {
+    /* @link https://utopia.fyi/type/calculator?c=360,40,1.2,2560,80,1.25,0,0,&s=0.75,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+    --font-s: clamp(1.25rem, -0.4167rem + 2.6042vw, 3.75rem);
+    /* @link https: //utopia.fyi/type/calculator?c=360,30,1.2,2555,50,1.25,0,0,&s=0.75,1.5,s-l&g=s,l,xl,12 */
+    --font-m: clamp(1.875rem, 1.6705rem + 0.9091vw, 3.125rem);
+
+    /* @link https://utopia.fyi/type/calculator?c=360,50,1.2,2560,250,1.25,0,0,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+    
+    --font-xl: clamp(3.125rem, 1.0795rem + 9.0909vw, 15.625rem);
+}
+
+:root {
+    --header-font: 'Coaster Sans';
+}
+
+// MEDIA QUERIES
+
+$breakpoints: (
+    mobile: 420px,
+    tablet: 740px,
+    tabletLandscape: 1020px,
+    desktop: 1280px,
+    wide: 1440px,
+    full: 1920px,
+);
+
+// FOR DEBUGGING PURPOSES
+$show-breakpoints: (
+    mobile,
+    tablet,
+    tabletLandscape,
+    desktop,
+    wide,
+    full
+);
+
+// @use 'mq' with ($breakpoints: $breakpoints,
+//     $show-breakpoints: $show-breakpoints);

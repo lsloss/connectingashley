@@ -1,0 +1,30 @@
+/*
+Theme Name: Connecting Ashley
+Theme URI: https://studiomothership.com
+Author: Studio Mothership
+Author URI: https://studiomothership.com/
+Description: A skeleton theme
+Version: 1.0.0
+License: 
+License URI: 
+Text Domain: connecting-ashley
+Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+
+*/
+
+@use "libs/reset";
+
+@use "vars/variables";
+
+@use "global/global";
+
+@use "partials/accessibility";
+@use "partials/layout";
+@use "partials/links";
+@use "partials/media";
+@use "partials/lists";
+@use "partials/typography";
+
+@use "components/masthead";
+
+@use "map/map";

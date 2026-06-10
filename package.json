@@ -1,0 +1,43 @@
+{
+  "name": "connectingashley",
+  "version": "1.0.0",
+  "description": "A WordPress theme skeleton using Webpack",
+  "main": "webpack.config.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "watch": "webpack --watch --mode development",
+    "build": "webpack --mode production"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "autoprefixer": "^10.4.0",
+    "babel-loader": "^9.1.2",
+    "browser-sync": "^3.0.4",
+    "browser-sync-webpack-plugin": "^2.4.0",
+    "css-loader": "^6.9.0",
+    "mini-css-extract-plugin": "^2.9.0",
+    "postcss-loader": "^7.3.3",
+    "sass": "^1.73.0",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://lsloss@bitbucket.org/lsloss/connectingashley.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/lsloss/connectingashley#readme",
+  "browserslist": [
+    ">0.25%, not dead",
+    "last 2 versions",
+    "ie >= 10"
+  ],
+  "dependencies": {
+    "leaflet": "^2.0.0-alpha.1",
+    "papaparse": "^5.5.3"
+  }
+}
