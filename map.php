@@ -12,7 +12,9 @@
 
 get_header(); ?>
 
-<main id="main" class="main main--page">
+<main id="main" class="main main--map">
+
+    <div id="map-filters" class="map-filters"></div>
 
     <div id="map" class="map"></div>
 

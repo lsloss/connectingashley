@@ -1,6 +1,8 @@
 import 'leaflet/dist/leaflet.css';
 import { Map, TileLayer, Marker } from 'leaflet';
 import Papa from 'papaparse';
+import { normaliseCategory } from '../utils/normaliseCategory';
+import { categoryConfig } from '../config/categories';
 import { createPinSystem } from './mapPins';
 
 export async function initMap(mapId, csvUrl) {
@@ -29,6 +31,12 @@ export async function initMap(mapId, csvUrl) {
     const pinSystem = createPinSystem(parsed.data);
     const { getIcon } = pinSystem;
 
+    // =========================
+    // FILTER STRUCTURE
+    // =========================
+    const filterTree = {};
+    const markerTree = {};
+
     parsed.data.forEach(row => {
       const coords = row["Coordinates"]?.split(", ");
       if (!coords) return;
@@ -38,22 +46,55 @@ export async function initMap(mapId, csvUrl) {
 
       const name = row.Name;
 
-      const category = row.Category
-        ?.trim()
-        .replace(/[-_\s]+(.)?/g, (_, c) =>
-          c ? c.toUpperCase() : ''
-        );
+      const category = normaliseCategory(row.Category);
 
+      const categoryLabel = row.Category;
       const subcategory = row["Sub category"]?.trim();
 
-      if (!isNaN(lat) && !isNaN(lng)) {
-        new Marker([lat, lng], {
-          icon: getIcon(category, subcategory)
-        })
-          .bindPopup(name)
-          .addTo(map);
+      if (isNaN(lat) || isNaN(lng)) return;
+
+      // =========================
+      // BUILD FILTER TREE
+      // =========================
+      if (!filterTree[category]) {
+        filterTree[category] = {
+          label: categoryLabel,
+          subcategories: {}
+        };
       }
+
+      if (!filterTree[category].subcategories[subcategory]) {
+        filterTree[category].subcategories[subcategory] = 0;
+      }
+
+      filterTree[category].subcategories[subcategory]++;
+
+      // =========================
+      // BUILD MARKER TREE
+      // =========================
+      if (!markerTree[category]) {
+        markerTree[category] = {};
+      }
+
+      if (!markerTree[category][subcategory]) {
+        markerTree[category][subcategory] = [];
+      }
+
+      const marker = new Marker([lat, lng], {
+        icon: getIcon(category, subcategory)
+      }).bindPopup(name);
+
+      markerTree[category][subcategory].push(marker);
     });
+
+    const mapState = {
+      map,
+      markers: markerTree,
+      filters: filterTree,
+      config: categoryConfig
+  };
+
+  window.__mapState = mapState;
 
   } catch (err) {
     console.error('Failed to load CSV:', err);

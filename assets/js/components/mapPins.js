@@ -1,20 +1,9 @@
 import { DivIcon } from 'leaflet';
+import { normaliseCategory } from '../utils/normaliseCategory';
+import { categoryConfig } from '../config/categories';
 
 export function createPinSystem(data) {
   const iconCache = new Map();
-
-  // -----------------------------
-  // 1. CATEGORY CONFIG
-  // -----------------------------
-  const categoryConfig = {
-    CommunityHubsAndProjects: { hue: 345, symbol: 'communityHubsAndProjects' },
-    EcoProjects: { hue: 53, symbol: 'ecoProjects' },
-    Facility: { hue: 220, symbol: 'facility' },
-    Health: { hue: 352, symbol: 'health' },
-    HistoryAndCulture: { hue: 31, symbol: 'historyAndCulture' },
-    NatureAndGreenSpaces: { hue: 173, symbol: 'natureAndGreenSpaces' },
-    Transport: { hue: 208, symbol: 'transport' }
-  };
 
   // -----------------------------
   // 2. BUILD SUBCATEGORY MAP
@@ -22,9 +11,7 @@ export function createPinSystem(data) {
   const subcategoriesByCategory = new Map();
 
   data.forEach(row => {
-    const category = row.Category
-      ?.trim()
-      .replace(/[-_\s]+(.)?/g, (_, c) => c ? c.toUpperCase() : '');
+    const category = normaliseCategory(row.Category);
 
     const subcategory = row["Sub category"]?.trim();
 

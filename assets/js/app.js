@@ -1,6 +1,7 @@
 import '../scss/styles.scss';
 import { initMap } from './components/mapInit';
 import { createPinSystem } from './components/mapPins';
+import { initMapFilters } from './components/mapFilters';
 
 import sprite from '../images/icons/iconSprite.svg?raw';
 
@@ -13,4 +14,6 @@ const mapId = 'map';
 const csvUrl = '/wp-content/uploads/mapdata/Ashley-Map-DataMarkers-only.csv';
 
 // Initialize map
-initMap(mapId, csvUrl);
+initMap(mapId, csvUrl).then(() => {
+  initMapFilters();
+});
