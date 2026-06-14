@@ -4,8 +4,10 @@
     padding: 50px;
     position: relative;
     z-index: 1;
+    display: none;
     
     .home & {
+        display: block;
         grid-column: 1;
         grid-row: 1 / 2;
     }
