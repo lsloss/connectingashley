@@ -1,104 +1,101 @@
 import 'leaflet/dist/leaflet.css';
 import { Map, TileLayer, Marker } from 'leaflet';
 import Papa from 'papaparse';
+import { createPinSystem } from './mapPins';
 import { normaliseCategory } from '../utils/normaliseCategory';
 import { categoryConfig } from '../config/categories';
-import { createPinSystem } from './mapPins';
+import { createRouteSystem } from './mapRoutes';
 
-export async function initMap(mapId, csvUrl) {
+export async function initMap(mapId, csvUrl, routesUrl) {
   const map = new Map(mapId, {
     center: [51.469511811900325, -2.582901596426167],
     zoom: 16
   });
 
-  new TileLayer('//{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
+  // new TileLayer('//{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+  //   maxZoom: 19,
+  //   attribution: '&copy; OpenStreetMap contributors'
+  // }).addTo(map);
 
-  try {
-    const res = await fetch(csvUrl);
-    if (!res.ok) throw new Error('CSV not found');
+  // =========================
+  // LOAD ROUTES
+  // =========================
+  const routeRes = await fetch(routesUrl);
+  if (!routeRes.ok) throw new Error('Routes GeoJSON not found');
 
-    const csvText = await res.text();
+  const geojson = await routeRes.json();
+  const routeSystem = createRouteSystem(geojson, map);
 
-    const parsed = Papa.parse(csvText, {
-      header: true,
-      skipEmptyLines: true
-    });
+  // =========================
+  // LOAD CSV MARKERS
+  // =========================
+  const csvRes = await fetch(csvUrl);
+  if (!csvRes.ok) throw new Error('CSV not found');
 
-    // ✅ build pin system FIRST
-    const pinSystem = createPinSystem(parsed.data);
-    const { getIcon } = pinSystem;
+  const csvText = await csvRes.text();
 
-    // =========================
-    // FILTER STRUCTURE
-    // =========================
-    const filterTree = {};
-    const markerTree = {};
+  const parsed = Papa.parse(csvText, {
+    header: true,
+    skipEmptyLines: true
+  });
 
-    parsed.data.forEach(row => {
-      const coords = row["Coordinates"]?.split(", ");
-      if (!coords) return;
+  const pinSystem = createPinSystem(parsed.data);
+  const { getIcon } = pinSystem;
 
-      const lat = parseFloat(coords[0]);
-      const lng = parseFloat(coords[1]);
+  const filterTree = {};
+  const markerTree = {};
 
-      const name = row.Name;
+  parsed.data.forEach(row => {
+    const coords = row["Coordinates"]?.split(", ");
+    if (!coords) return;
 
-      const category = normaliseCategory(row.Category);
+    const lat = parseFloat(coords[0]);
+    const lng = parseFloat(coords[1]);
 
-      const categoryLabel = row.Category;
-      const subcategory = row["Sub category"]?.trim();
+    if (isNaN(lat) || isNaN(lng)) return;
 
-      if (isNaN(lat) || isNaN(lng)) return;
+    const name = row.Name;
+    const category = normaliseCategory(row.Category);
+    const subcategory = row["Sub category"]?.trim();
 
-      // =========================
-      // BUILD FILTER TREE
-      // =========================
-      if (!filterTree[category]) {
-        filterTree[category] = {
-          label: categoryLabel,
-          subcategories: {}
-        };
-      }
+    if (!category || !subcategory) return;
 
-      if (!filterTree[category].subcategories[subcategory]) {
-        filterTree[category].subcategories[subcategory] = 0;
-      }
+    // -------------------------
+    // FILTER TREE
+    // -------------------------
+    if (!filterTree[category]) {
+      filterTree[category] = {
+        label: row.Category,
+        subcategories: {}
+      };
+    }
 
-      filterTree[category].subcategories[subcategory]++;
+    filterTree[category].subcategories[subcategory] =
+      (filterTree[category].subcategories[subcategory] || 0) + 1;
 
-      // =========================
-      // BUILD MARKER TREE
-      // =========================
-      if (!markerTree[category]) {
-        markerTree[category] = {};
-      }
+    // -------------------------
+    // MARKER TREE
+    // -------------------------
+    if (!markerTree[category]) {
+      markerTree[category] = {};
+    }
 
-      if (!markerTree[category][subcategory]) {
-        markerTree[category][subcategory] = [];
-      }
+    if (!markerTree[category][subcategory]) {
+      markerTree[category][subcategory] = [];
+    }
 
-      const marker = new Marker([lat, lng], {
-        icon: getIcon(category, subcategory)
-      }).bindPopup(name);
+    const marker = new Marker([lat, lng], {
+      icon: getIcon(category, subcategory)
+    }).bindPopup(name);
 
-      markerTree[category][subcategory].push(marker);
-    });
+    markerTree[category][subcategory].push(marker);
+  });
 
-    const mapState = {
-      map,
-      markers: markerTree,
-      filters: filterTree,
-      config: categoryConfig
+  return {
+    map,
+    markers: markerTree,
+    routes: routeSystem,
+    filters: filterTree,
+    config: categoryConfig
   };
-
-  window.__mapState = mapState;
-
-  } catch (err) {
-    console.error('Failed to load CSV:', err);
-  }
-
-  return map;
 }

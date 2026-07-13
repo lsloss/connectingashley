@@ -1,15 +1,20 @@
 export function lightenHex(hex, amount = 0.2) {
   const num = parseInt(hex.replace('#', ''), 16);
 
-  let r = (num >> 16) + Math.round(255 * amount);
-  let g = ((num >> 8) & 0x00FF) + Math.round(255 * amount);
-  let b = (num & 0x0000FF) + Math.round(255 * amount);
+  let r = (num >> 16) & 255;
+  let g = (num >> 8) & 255;
+  let b = num & 255;
 
-  r = Math.min(255, r);
-  g = Math.min(255, g);
-  b = Math.min(255, b);
+  r = Math.round(r + (255 - r) * amount);
+  g = Math.round(g + (255 - g) * amount);
+  b = Math.round(b + (255 - b) * amount);
 
-  return `rgb(${r}, ${g}, ${b})`;
+  return (
+    '#' +
+    [r, g, b]
+      .map(v => v.toString(16).padStart(2, '0'))
+      .join('')
+  );
 }
 
 export function getContrastColor(hex) {
