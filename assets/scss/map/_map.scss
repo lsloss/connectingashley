@@ -385,3 +385,30 @@ input[type="radio"]:checked::before {
         padding: 20px;
     }
 }
+
+.leaflet-popup-content {
+    font-family: var(--body-font);
+    font-size: 14px!important;
+
+    p {
+        font-size: 14px;
+    }
+}
+
+.route-popup .leaflet-popup-content-wrapper {
+    background: #000;
+    color: #fff;
+}
+
+.route-popup .leaflet-popup-tip {
+    background: #000;
+}
+
+.route-popup a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.route-popup .leaflet-popup-close-button {
+    color: #fff;
+}

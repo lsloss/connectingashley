@@ -48,6 +48,24 @@ export function createRouteSystem(geojson, map) {
         }
       });
 
+      const props = feature.properties || {};
+
+      const popupContent = `
+          <strong>${props.name}</strong>
+          ${props.description ? `<p>${props.description}</p>` : ''}
+          ${props.length ? `<p>Length: ${props.length}</p>` : ''}
+          ${props.time ? `<p>Time: ${props.time}</p>` : ''}
+          ${props.terrain ? `<p>Terrain: ${props.terrain}</p>` : ''}
+          ${props['getting there'] ? `<p>Getting there: ${props['getting there']}</p>` : ''}
+          ${props.credit ? `<p>Credit: ${props.creditURl ? `<a href="${props.creditURl}" target="_blank" rel="noopener noreferrer">${props.credit}</a>` : props.credit }</p>` : ''}
+        `;
+
+      if (props.name) {
+        layer.bindPopup(popupContent, { className: 'route-popup' });
+      }
+
+      routes[routeId].popupLayer = layer;
+      
       routes[routeId].addLayer(layer);
       return;
     }
@@ -57,6 +75,11 @@ export function createRouteSystem(geojson, map) {
     // =========================
     if (feature.geometry.type === 'Point') {
       const props = feature.properties || {};
+
+      const popupContent = `
+          <strong>${props.name}</strong>
+          ${props.description ? `<p>${props.description}</p>` : ''}
+        `;
 
       const icon = props.number
         ? createNumberIcon(props.number)
@@ -68,10 +91,7 @@ export function createRouteSystem(geojson, map) {
       );
 
       if (props.name) {
-        marker.bindPopup(`
-          <strong>${props.name}</strong>
-          ${props.description ? `<p>${props.description}</p>` : ''}
-        `);
+        marker.bindPopup(popupContent);
       }
 
       routes[routeId].addLayer(marker);
@@ -92,6 +112,8 @@ export function createRouteSystem(geojson, map) {
         padding: [40, 40],
         maxZoom: 17
       });
+
+      layer.popupLayer?.openPopup();
     },
 
     hide(routeId) {

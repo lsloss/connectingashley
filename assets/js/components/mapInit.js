@@ -58,6 +58,8 @@ export async function initMap(mapId, csvUrl, routesUrl) {
     const name = row.Name;
     const category = normaliseCategory(row.Category);
     const subcategory = row["Sub category"]?.trim();
+    const description = row.Description;
+    const image = row['Image embed'];
 
     if (!category || !subcategory) return;
 
@@ -87,7 +89,11 @@ export async function initMap(mapId, csvUrl, routesUrl) {
 
     const marker = new Marker([lat, lng], {
       icon: getIcon(category, subcategory)
-    }).bindPopup(name);
+    }).bindPopup(`
+      <strong>${name}</strong>
+      ${description ? `<p>${description}</p>` : ''}
+      ${image ? `<p>${image}</p>` : ''}
+      `);
 
     markerTree[category][subcategory].push(marker);
   });
