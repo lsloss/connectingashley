@@ -95,11 +95,11 @@ h3 {
     }
 
     &:has(.route-list) {
-        background-color: var(--blue);
+        background-color: black;
         color: white;
 
         .category-header {
-            background-color: var(--blue);
+            background-color: black;
             color: white;
 
             fill: white;

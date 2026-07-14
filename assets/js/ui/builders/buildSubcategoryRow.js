@@ -7,8 +7,10 @@ export function buildSubcategoryRow(category, sub, count, config, allSubs, { sho
 
   if(category == "Routes") {
     input.type = 'radio';
+    input.name = "route-filter";
   } else {
     input.type = 'checkbox';
+    input.name = `${category}` + "-filter";
   }
   input.dataset.category = category;
   input.dataset.subcategory = sub;

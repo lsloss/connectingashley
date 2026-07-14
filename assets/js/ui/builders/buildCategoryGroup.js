@@ -1,5 +1,4 @@
 import { createCategoryIcon } from '../../utils/categoryIcon';
-// import { lightenHex, getContrastColor } from '../../utils/colour';
 
 export function buildCategoryGroup(category, data, config) {
     const group = document.createElement('div');
@@ -10,6 +9,7 @@ export function buildCategoryGroup(category, data, config) {
 
     group.className = 'filter-group';
     header.className = 'category-header';
+    header.setAttribute('aria-expanded', false);
     arrow.className = 'category-arrow';
     header.dataset.category = category;
     title.className = 'category-title';

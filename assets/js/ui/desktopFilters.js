@@ -1,8 +1,6 @@
 import { buildCategoryGroup } from './builders/buildCategoryGroup';
 import { buildSubcategoryList } from './builders/buildSubcategoryList';
-// import { buildRoutes } from './routeFilters';
 import { buildRouteList } from './builders/buildRouteList';
-import { createUiState } from './builders/state/uiState';
 
 export function initDesktopFilters(mapState, controller) {
   const { filters, config, routes } = mapState;
@@ -11,16 +9,25 @@ export function initDesktopFilters(mapState, controller) {
   // =====================
   // BUILD ROUTES
   // =====================
-  // buildRoutes(container, mapState.routes, mapState.uiState);
-
     const { group, header } = buildCategoryGroup('Routes', { label: 'Routes' });
-    const list = buildRouteList(mapState.routes, mapState.uiState);
+    const list = buildRouteList(
+      mapState.routes,
+      mapState.uiState,
+      (routeId, checked) => {
+          if (checked) {
+              controller.showRoute(routeId);
+          } else {
+              controller.hideRoute(routeId);
+          }
+
+      }
+  );
     
     group.appendChild(list);
     container.appendChild(group);
   
     header.addEventListener('click', () => {
-      header.setAttribute('aria-expanded', list.dataset.collapsed === 'true' ? 'false' : 'true');
+      header.setAttribute('aria-expanded', list.dataset.collapsed === 'true' ? 'true' : 'false');
       list.dataset.collapsed = list.dataset.collapsed === 'true' ? 'false' : 'true';
     });
 

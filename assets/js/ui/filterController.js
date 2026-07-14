@@ -24,6 +24,12 @@ export function createFilterController(mapState) {
   }
 
   function showRoute(routeId) {
+    Object.keys(mapState.routes.routes).forEach(id => {
+        if (id !== routeId) {
+            routes.hide(id);
+        }
+    });
+
     routes.show(routeId);
   }
 

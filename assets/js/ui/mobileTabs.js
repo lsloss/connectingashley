@@ -14,8 +14,18 @@ export function initMobileTabs(mapState, controller, bottomSheetAPI) {
 
     routesHeader.addEventListener('click', () => {
         panel.replaceChildren(
-            buildRouteList(mapState.routes, controller, mapState.uiState)
-        );
+             buildRouteList(
+            mapState.routes,
+            mapState.uiState,
+            (routeId, checked) => {
+                if (checked) {
+                    controller.showRoute(routeId);
+                } else {
+                    controller.hideRoute(routeId);
+                }
+            }
+        )
+    );
 
         panel.classList.add('open');
         bottomSheetAPI?.expandToMid?.();
