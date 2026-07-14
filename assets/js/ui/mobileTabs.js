@@ -1,31 +1,46 @@
 import { buildCategoryGroup } from './builders/buildCategoryGroup';
-import { buildAllRow } from './builders/buildAllRows';
-import { buildSubcategoryRow } from './builders/buildSubcategoryRow';
 import { buildSubcategoryList } from './builders/buildSubcategoryList';
-import { buildRoutes } from './routeFilters';
+import { buildRouteList } from './builders/buildRouteList';
 
 export function initMobileTabs(mapState, controller, bottomSheetAPI) {
-    const { filters, config, routes } = mapState;
+    const { filters, config } = mapState;
     const container = document.getElementById("map-filters");
     const panel = document.getElementById("filter-categories");
 
-    // =====================
-    // BUILD ROUTES
-    // =====================
-    buildRoutes(container, mapState.routes);
+    // -------------------------
+    // Routes tab
+    // -------------------------
+    const { group: routesGroup, header: routesHeader } = buildCategoryGroup('Routes', { label: 'Routes' });
 
-    // =====================
-    // BUILD CATEGORIES
-    // =====================
+    routesHeader.addEventListener('click', () => {
+        panel.replaceChildren(
+            buildRouteList(mapState.routes, controller, mapState.uiState)
+        );
+
+        panel.classList.add('open');
+        bottomSheetAPI?.expandToMid?.();
+    });
+
+    container.appendChild(routesGroup);
+
+    // -------------------------
+    // Category tabs
+    // -------------------------
     Object.entries(filters).forEach(([category, data]) => {
-        const { group, header } = buildCategoryGroup( category, data, config);
+        const { group, header } = buildCategoryGroup(category, data, config);
 
-        header.addEventListener("click", () => {
+        header.addEventListener('click', () => {
             panel.replaceChildren(
-                buildSubcategoryList( category, data, config, controller, mapState.uiState)
+                buildSubcategoryList(
+                    category,
+                    data,
+                    config,
+                    controller,
+                    mapState.uiState
+                )
             );
-            panel.classList.add("open");
 
+            panel.classList.add('open');
             bottomSheetAPI?.expandToMid?.();
         });
 

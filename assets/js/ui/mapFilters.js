@@ -6,8 +6,6 @@ export function initMapFilters(mapState, controller, bottomSheetAPI) {
     const container = document.getElementById('map-filters');
     const media = window.matchMedia('(max-width: 768px)');
 
-    console.log(mapState.uiState);
-
     function render() {
         container.replaceChildren();
 

@@ -3,7 +3,6 @@ import { buildSubcategoryRow } from './buildSubcategoryRow';
 import { createUiState } from './state/uiState';
 
 export function buildSubcategoryList(category, data, config, controller, uiState) {
-
     const allSubs = Object.keys(data.subcategories).sort();
     const { allInput, allRow } = buildAllRow();
     const subList = document.createElement('ul');
@@ -11,8 +10,6 @@ export function buildSubcategoryList(category, data, config, controller, uiState
     subList.className = 'filter-list subcategory-list';
     subList.dataset.collapsed = 'true';
     subList.appendChild(allRow);
-
-    //uiState.inputRegistry.set(`${category}:ALL`, allInput);
 
     allSubs.forEach(sub => {
       const count = data.subcategories[sub];
@@ -22,7 +19,8 @@ export function buildSubcategoryList(category, data, config, controller, uiState
         sub,
         count,
         config,
-        allSubs
+        allSubs,
+        { showCount: true }
       );
 
       input.checked = uiState.selectedMarkers.has(`${category}:${sub}`);
