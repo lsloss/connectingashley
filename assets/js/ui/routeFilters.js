@@ -1,16 +1,20 @@
+import { buildCategoryGroup } from './builders/buildCategoryGroup';
+
 export function buildRoutes(container, routeSystem) {
-  const heading = document.createElement('h3');
+
+  const { group, header } = buildCategoryGroup('Routes', { label: 'Routes' });
+
   const list = document.createElement('ul');
 
-  heading.textContent = 'Routes';
-  list.className = 'route-list';
+  list.className = 'filter-list route-list';
+  list.dataset.collapsed = 'true';
 
   Object.entries(routeSystem.routes).forEach(([routeId, group]) => {
     const row = document.createElement('li');
     const label = document.createElement('label');
     const input = document.createElement('input');
     
-    input.type = 'checkbox';
+    input.type = 'radio';
     label.appendChild(input);
     label.appendChild(document.createTextNode(group.routeName || routeId));
     row.appendChild(label);
@@ -33,6 +37,11 @@ export function buildRoutes(container, routeSystem) {
     });
   });
 
-  container.appendChild(heading);
-  container.appendChild(list);
+  group.appendChild(list);
+  container.appendChild(group);
+
+  header.addEventListener('click', () => {
+    list.dataset.collapsed = list.dataset.collapsed === 'true' ? 'false' : 'true';
+    header.setAttribute('aria-expanded', list.dataset.collapsed === 'true' ? 'false' : 'true');
+  });
 }

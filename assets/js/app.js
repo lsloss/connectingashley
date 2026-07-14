@@ -1,9 +1,7 @@
 import '../scss/styles.scss';
 import { initMap } from './components/mapInit';
 import { createFilterController } from './ui/filterController';
-//import { initMobileTabs } from './ui/mobileTabs';
 import { initBottomSheet } from './ui/mobilePanel';
-//import { initDesktopFilters } from './ui/desktopFilters';
 import { initMapFilters } from './ui/mapFilters';
 
 import sprite from '../images/icons/iconSprite.svg?raw';
@@ -21,12 +19,6 @@ async function boot() {
   const bottomSheetAPI = initBottomSheet(mapState.map);
 
   initMapFilters(mapState, controller, bottomSheetAPI);
-
-  // if (mobile.matches) {
-  //   initMobileTabs( mapState, controller, bottomSheetAPI );
-  // } else {
-  //   initDesktopFilters( mapState, controller );
-  // }
 }
 
 boot();

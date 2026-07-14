@@ -5,5 +5,6 @@ export const categoryConfig = {
     Health: { baseColor: '#bd1e2d', symbol: 'Health' },
     HistoryAndCulture: { baseColor: '#ff931e', symbol: 'HistoryAndCulture' },
     NatureAndGreenSpaces: { baseColor: '#00665c', symbol: 'NatureAndGreenSpaces' },
-    Transport: { baseColor: '#ff6485', symbol: 'Transport' }
+    Transport: { baseColor: '#ff6485', symbol: 'Transport' },
+    Routes: { baseColor: '#000000', symbol: 'Routes' }
   };

@@ -7,26 +7,28 @@ import { buildRoutes } from './routeFilters';
 export function initMobileTabs(mapState, controller, bottomSheetAPI) {
     const { filters, config, routes } = mapState;
     const container = document.getElementById("map-filters");
-    const inputRegistry = new Map();
-
-    // =====================
-    // CATEGORIES
-    // =====================
-    const tabs = document.getElementById("map-filters");
     const panel = document.getElementById("filter-categories");
 
+    // =====================
+    // BUILD ROUTES
+    // =====================
+    buildRoutes(container, mapState.routes);
+
+    // =====================
+    // BUILD CATEGORIES
+    // =====================
     Object.entries(filters).forEach(([category, data]) => {
         const { group, header } = buildCategoryGroup( category, data, config);
 
         header.addEventListener("click", () => {
             panel.replaceChildren(
-                buildSubcategoryList( category, data, config, inputRegistry, controller, mapState)
+                buildSubcategoryList( category, data, config, controller, mapState.uiState)
             );
             panel.classList.add("open");
 
             bottomSheetAPI?.expandToMid?.();
         });
 
-        tabs.appendChild(group);
+        container.appendChild(group);
     });
 }

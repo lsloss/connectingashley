@@ -1,13 +1,18 @@
 import { buildAllRow } from './buildAllRows';
 import { buildSubcategoryRow } from './buildSubcategoryRow';
+import { createUiState } from './state/uiState';
 
-export function buildSubcategoryList(category, data, config, inputRegistry, controller) {
+export function buildSubcategoryList(category, data, config, controller, uiState) {
+
     const allSubs = Object.keys(data.subcategories).sort();
     const { allInput, allRow } = buildAllRow();
     const subList = document.createElement('ul');
   
-    subList.className = 'subcategory-list';
+    subList.className = 'filter-list subcategory-list';
+    subList.dataset.collapsed = 'true';
     subList.appendChild(allRow);
+
+    //uiState.inputRegistry.set(`${category}:ALL`, allInput);
 
     allSubs.forEach(sub => {
       const count = data.subcategories[sub];
@@ -20,18 +25,28 @@ export function buildSubcategoryList(category, data, config, inputRegistry, cont
         allSubs
       );
 
-      inputRegistry.set(`${category}:${sub}`, input);
+      input.checked = uiState.selectedMarkers.has(`${category}:${sub}`);
+
+      uiState.inputRegistry.set(`${category}:${sub}`, input);
 
       input.addEventListener('change', () => {
-        input.checked
-          ? controller.show(category, sub)
-          : controller.hide(category, sub);
+        const key = `${category}:${sub}`;
+
+        if (input.checked) {
+            uiState.selectedMarkers.add(key);
+            controller.show(category, sub);
+        } else {
+            uiState.selectedMarkers.delete(key);
+            controller.hide(category, sub);
+        }
 
         syncAllState(allInput, subList);
       });
 
       subList.appendChild(row);
     });
+
+    syncAllState(allInput, subList);
 
     function syncAllState(allInput, subList) {
       const subInputs = subList.querySelectorAll('input[data-subcategory]');
@@ -55,14 +70,22 @@ export function buildSubcategoryList(category, data, config, inputRegistry, cont
       const checked = allInput.checked;
 
       allSubs.forEach(sub => {
-        const input = inputRegistry.get(`${category}:${sub}`);
+        const input = uiState.inputRegistry.get(`${category}:${sub}`);
         if (!input) return;
+
+        const key = `${category}:${sub}`;
 
         input.checked = checked;
 
-        checked
-          ? controller.show(category, sub)
-          : controller.hide(category, sub);
+        uiState.inputRegistry.set(key, input);
+
+        if (input.checked) {
+            uiState.selectedMarkers.add(key);
+            controller.show(category, sub);
+        } else {
+            uiState.selectedMarkers.delete(key);
+            controller.hide(category, sub);
+        }
       });
 
       syncAllState(allInput, subList);

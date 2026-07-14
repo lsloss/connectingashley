@@ -82,6 +82,8 @@ h3 {
     background-color: white;
     border-bottom: 1px solid black;
     color: black;
+    position: relative;
+    z-index: 99;
 
     &:first-of-type {
         border-top: 1px solid black;
@@ -90,6 +92,18 @@ h3 {
     @include mq($until: tablet) {
         border-top: 1px solid black;
         border-right: 1px solid black;
+    }
+
+    &:has(.route-list) {
+        background-color: var(--blue);
+        color: white;
+
+        .category-header {
+            background-color: var(--blue);
+            color: white;
+
+            fill: white;
+        }
     }
 }
 
@@ -153,6 +167,12 @@ h3 {
             fill: white;
         }
     }
+
+    &[aria-expanded="true"] {
+        .category-arrow {
+            transform: rotate(180deg);
+        }
+    }
 }
 
 .category-title {
@@ -166,17 +186,37 @@ h3 {
     align-items: center;
 }
 
-.subcategory-list.collapsed {
+.category-arrow {
     display: none;
+
+    @include mq($from: tablet) {
+        display: flex;
+        align-items: center;
+        transition: 0.2s linear;
+    }
 }
 
-.subcategory-list,
-.route-list {
+.filter-list[data-collapsed="true"] {
+    @include mq($from: tablet) {
+        max-height: 0;
+        overflow: hidden;
+    }
+}
+
+.filter-list[data-collapsed="false"] {
+    @include mq($from: tablet) {
+        padding-bottom: 20px;
+    }
+}
+
+.filter-list {
     display: flex;
     flex-direction: column;
-    padding: 0 20px 20px;
     list-style-type: none;
     margin: 0;
+    padding: 0 20px;
+    max-height: 600px;
+    transition: all 1s cubic-bezier(0, 1, 0, 1);
 
     li {
         display: flex;
@@ -202,7 +242,8 @@ h3 {
     }
 }
 
-input[type="checkbox"] {
+input[type="checkbox"],
+input[type="radio"] {
     appearance: none;
     margin: 0;
 
@@ -229,7 +270,20 @@ input[type="checkbox"]::before {
     box-shadow: inset 1em 1em currentColor;
 }
 
-input[type="checkbox"]:checked::before {
+input[type="radio"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    border-radius: 50%;
+    background-color: currentColor;
+    transform: scale(0);
+    transform-origin: center;
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em currentColor;
+}
+
+input[type="checkbox"]:checked::before,
+input[type="radio"]:checked::before {
     transform: scale(1);
 }
 
@@ -264,7 +318,7 @@ input[type="checkbox"]:checked::before {
     //     transform: translateY(0);
     // }
 
-    .subcategory-list.collapsed {
+    .filter-list[data-collapsed="true"] {
         display: flex;
         padding: 0;
     }
@@ -325,7 +379,9 @@ input[type="checkbox"]:checked::before {
 }
 
 .sheet-content {
-    overflow-y: auto;
-    flex: 1;
-    padding: 20px;
+    @include mq($until: tablet) {
+        overflow-y: auto;
+        flex: 1;
+        padding: 20px;
+    }
 }

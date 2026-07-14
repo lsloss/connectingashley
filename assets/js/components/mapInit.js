@@ -4,6 +4,7 @@ import Papa from 'papaparse';
 import { createPinSystem } from './mapPins';
 import { normaliseCategory } from '../utils/normaliseCategory';
 import { categoryConfig } from '../config/categories';
+import { createUiState } from '../ui/builders/state/uiState';
 import { createRouteSystem } from './mapRoutes';
 
 export async function initMap(mapId, csvUrl, routesUrl) {
@@ -91,11 +92,14 @@ export async function initMap(mapId, csvUrl, routesUrl) {
     markerTree[category][subcategory].push(marker);
   });
 
+  const uiState = createUiState();
+
   return {
     map,
     markers: markerTree,
     routes: routeSystem,
     filters: filterTree,
-    config: categoryConfig
+    config: categoryConfig,
+    uiState: uiState
   };
 }
