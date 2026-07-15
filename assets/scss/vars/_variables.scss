@@ -9,8 +9,6 @@
     --lightBlue: #7fa3f8;
     --blue: #5e92ff;
     --green: #2bb673;
-    //CATS
-    
 
     // TYPOGRAPHY
     /* @link https://utopia.fyi/type/calculator?c=360,40,1.2,2560,80,1.25,0,0,&s=0.75,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
@@ -25,26 +23,3 @@
     --body-font: 'National Park';
     --header-font: 'Coaster Sans';
 }
-
-// MEDIA QUERIES
-$breakpoints: (
-    mobile: 420px,
-    tablet: 740px,
-    tabletLandscape: 1020px,
-    desktop: 1280px,
-    wide: 1440px,
-    full: 1920px,
-);
-
-// FOR DEBUGGING PURPOSES
-$show-breakpoints: (
-    mobile,
-    tablet,
-    tabletLandscape,
-    desktop,
-    wide,
-    full
-);
-
-// @use 'mq' with ($breakpoints: $breakpoints,
-//     $show-breakpoints: $show-breakpoints);

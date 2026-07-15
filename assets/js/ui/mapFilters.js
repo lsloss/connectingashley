@@ -3,7 +3,6 @@ import { initMobileTabs } from './mobileTabs';
 import { createUiState } from './builders/state/uiState';
 
 function initMobilePopups(mapState, panel, bottomSheetAPI) {
-
     const isMobile = window.matchMedia('(max-width: 1280px)');
 
     mapState.map.on('popupopen', e => {
