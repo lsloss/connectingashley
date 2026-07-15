@@ -1,5 +1,11 @@
 @use "../vars/variables" as *;
 
+html, body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+}
+
 body {
     background-color: var(--lightBlue);
     color: white;
