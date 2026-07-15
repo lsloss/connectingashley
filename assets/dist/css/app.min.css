@@ -442,7 +442,7 @@ address {
 .map {
   grid-column: 1;
   grid-row: 2;
-  height: 90dvh;
+  height: 100%;
   width: 100dvw;
   z-index: 1;
 }
