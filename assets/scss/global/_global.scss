@@ -1,6 +1,4 @@
 @use "../vars/variables" as *;
-// @use "mixins" as *;
-// @use "functions" as *;
 
 body {
     background-color: var(--lightBlue);
@@ -20,6 +18,10 @@ body {
         grid-column: 1;
         grid-row: 1 / 3;
         background: var(--green);
+
+        a {
+            text-decoration: none;
+        }
     }
 }
 
@@ -49,7 +51,6 @@ body {
     text-align: center;
     line-height: 0.76;
     text-align: center;
-    text-decoration: none;
     color: inherit;
     width: 100%;
 }

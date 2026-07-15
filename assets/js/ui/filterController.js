@@ -11,7 +11,7 @@ export function createFilterController(mapState) {
     selectedMarkers.forEach(m => m.addTo(map));
 
     const group = new FeatureGroup(selectedMarkers);
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const isMobile = window.matchMedia('(max-width: 1280px)').matches;
 
     map.fitBounds(group.getBounds(), {
       paddingTopLeft: [40, 40],

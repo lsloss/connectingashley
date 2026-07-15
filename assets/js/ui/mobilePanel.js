@@ -1,7 +1,7 @@
 export function initBottomSheet(map) {
     const sheet = document.getElementById("filter-panel");
     const header = document.getElementById("sheet-header");
-    const minHeight = window.innerHeight * 0.10; // collapsed
+    const minHeight = window.innerHeight * 0.053; // collapsed
     const midHeight = window.innerHeight * 0.40; // peek
     const maxHeight = window.innerHeight * 0.9; // full
     const DRAG_THRESHOLD = 6;
@@ -100,19 +100,22 @@ export function initBottomSheet(map) {
     }
 
     // TOUCH
-    header.addEventListener("touchstart", (e) => {
-        e.preventDefault();
+    sheet.addEventListener("touchstart", (e) => {
+        if (isInteractive(e.target)) {
+            return;
+        }
+
         onStart(e.touches[0].clientY);
     });
 
-    header.addEventListener("touchmove", (e) => {
+    sheet.addEventListener("touchmove", (e) => {
         onMove(e.touches[0].clientY);
     });
 
-    header.addEventListener("touchend", onEnd);
+    sheet.addEventListener("touchend", onEnd);
 
     // MOUSE (desktop testing)
-    header.addEventListener("mousedown", (e) => {
+    sheet.addEventListener("mousedown", (e) => {
         onStart(e.clientY);
 
         const move = (ev) => onMove(ev.clientY);
@@ -146,6 +149,12 @@ export function initBottomSheet(map) {
             setHeight(minHeight);
         }
     });
+
+    function isInteractive(el) {
+        return el.closest(
+            'a, button, input, textarea, select, label'
+        );
+    }
 
     function disableMapInteraction() {
         map.dragging?.disable?.();

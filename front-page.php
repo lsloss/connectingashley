@@ -16,29 +16,28 @@
 get_header(); ?>
 
 <main id="main" class="main main--index">
+    <a href="/map">
+        <div class="hero-image">
+            <?php get_template_part('template-parts/content', 'hero'); ?>
+        </div>
 
-    <div class="hero-image">
-        <?php get_template_part('template-parts/content', 'hero'); ?>
-    </div>
+        <?php
+        if (have_posts()) :
 
+            /* Start the Loop */
+            while (have_posts()) :
+                the_post(); ?>
 
+                <div class="content">
+                    <?php the_content(); ?>
+                    <span class="discover">Discover</span>
+                </div>
 
-    <?php
-    if (have_posts()) :
+        <?php endwhile;
 
-        /* Start the Loop */
-        while (have_posts()) :
-            the_post(); ?>
-
-            <div class="content">
-                <?php the_content(); ?>
-                <a href="/map" class="discover">Discover</a>
-            </div>
-
-    <?php endwhile;
-
-    endif;
-    ?>
+        endif;
+        ?>
+    </a>
 
 </main>
 

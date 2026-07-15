@@ -14,13 +14,13 @@ get_header(); ?>
 
 <main id="main" class="main main--map">
     <div class="toolbar">
-        <h1 class="map-filters__title">Connecting <span>Ashley</span></h1>
+        <h1 class="map-filters__title"><a href="/">Connecting <span>Ashley</span></a></h1>
         <div id="map-filters" class="map-filters"></div>
 
     </div>
 
     <div id="map" class="map"></div>
-    
+
     <div id="filter-panel" class="filter-panel">
         <div id="sheet-header" class="sheet-header"></div>
         <div class="sheet-content" id="sheet-filters">

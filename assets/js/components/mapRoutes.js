@@ -51,7 +51,7 @@ export function createRouteSystem(geojson, map) {
       const props = feature.properties || {};
 
       const popupContent = `
-          <strong>${props.name}</strong>
+          <h3>${props.name}</h3>
           ${props.description ? `<p>${props.description}</p>` : ''}
           ${props.length ? `<p>Length: ${props.length}</p>` : ''}
           ${props.time ? `<p>Time: ${props.time}</p>` : ''}
@@ -79,7 +79,7 @@ export function createRouteSystem(geojson, map) {
       const props = feature.properties || {};
 
       const popupContent = `
-          <strong>${props.name}</strong>
+          <h3>${props.name}</h3>
           ${props.description ? `<p>${props.description}</p>` : ''}
         `;
 
@@ -112,7 +112,7 @@ export function createRouteSystem(geojson, map) {
 
       layer.addTo(map);
 
-      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+      const isMobile = window.matchMedia('(max-width: 1280px)').matches;
 
       map.fitBounds(layer.getBounds(), {
         paddingTopLeft: [40, 40],

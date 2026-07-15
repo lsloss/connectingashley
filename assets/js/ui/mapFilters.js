@@ -4,11 +4,11 @@ import { createUiState } from './builders/state/uiState';
 
 function initMobilePopups(mapState, panel, bottomSheetAPI) {
 
-    const media = window.matchMedia('(max-width: 768px)');
+    const isMobile = window.matchMedia('(max-width: 1280px)');
 
     mapState.map.on('popupopen', e => {
 
-        if (!media.matches) return;
+        if (!isMobile.matches) return;
 
         bottomSheetAPI.setPopupOpening(true);
 
@@ -24,12 +24,12 @@ function initMobilePopups(mapState, panel, bottomSheetAPI) {
 
 export function initMapFilters(mapState, controller, bottomSheetAPI) {
     const container = document.getElementById('map-filters');
-    const media = window.matchMedia('(max-width: 768px)');
+    const isMobile = window.matchMedia('(max-width: 1280px)');
 
     function render() {
         container.replaceChildren();
 
-        if (media.matches) {
+        if (isMobile.matches) {
             const panel = document.getElementById("filter-categories");
 
             initMobileTabs(mapState, controller, bottomSheetAPI, panel);
@@ -41,7 +41,7 @@ export function initMapFilters(mapState, controller, bottomSheetAPI) {
 
     render();
 
-    media.addEventListener('change', () => {
+    isMobile.addEventListener('change', () => {
         render();
     });
 }

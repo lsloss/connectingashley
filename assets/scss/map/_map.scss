@@ -6,11 +6,11 @@
     display: grid;
     grid-template-columns: 1fr;
 
-    @include mq($until: tablet) {
+    @include mq($until: desktop) {
         grid-template-rows: min-content 1fr;
     }
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         grid-template-columns: 400px 1fr;
     }
 }
@@ -22,7 +22,7 @@
     max-height: 100dvh;
     overflow: auto;
 
-    @include mq($until: tablet) {
+    @include mq($until: desktop) {
         z-index: 9999;
     }
 }
@@ -31,7 +31,7 @@
     overflow-x: auto;
     scroll-snap-type: x proximity;
 
-    @include mq($until: tablet) {
+    @include mq($until: desktop) {
         @include flexbox(row nowrap, flex-start, flex-start);
     }
 
@@ -47,20 +47,14 @@
         text-align: center;
         text-transform: uppercase;
 
+        a {
+            text-decoration: none;
+        }
+        
         span {
             color: black;
         }
     }
-}
-
-h3 {
-    font-family: var(--header-font);
-    font-size: var(--font-s);
-    letter-spacing: 1px;
-    padding-top: 20px;
-    margin-bottom: 0.5em;
-    text-align: center;
-    text-transform: uppercase;
 }
 
 .map {
@@ -70,7 +64,7 @@ h3 {
     width: 100dvw;
     z-index: 1;
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         grid-column: 2;
         grid-row: 1;
         height: 100dvh;
@@ -89,7 +83,7 @@ h3 {
         border-top: 1px solid black;
     }
 
-    @include mq($until: tablet) {
+    @include mq($until: desktop) {
         border-top: 1px solid black;
         border-right: 1px solid black;
     }
@@ -114,25 +108,25 @@ h3 {
     cursor: pointer;
     padding: 20px;
 
-    @include mq($until: tablet) {
+    @include mq($until: desktop) {
         padding: 15px;
         white-space: pre;
     }
 
     &[data-category="HistoryAndCulture"] {
-        @include mq($until: tablet) {
+        @include mq($until: desktop) {
             background-color: #ff931e;
         }
     }
 
     &[data-category="CommunityHubsAndProjects"] {
-        @include mq($until: tablet) {
+        @include mq($until: desktop) {
             background-color: #ffe600;
         }
     }
 
     &[data-category="EcoProjects"] {
-        @include mq($until: tablet) {
+        @include mq($until: desktop) {
             background-color: #5e9edd;
             color: white;
             fill: white;
@@ -140,28 +134,28 @@ h3 {
     }
 
     &[data-category="Facility"] {
-        @include mq($until: tablet) {
+        @include mq($until: desktop) {
             background-color: #17377b;
             color: white;
             fill: white;
         }
     }
     &[data-category="Health"] {
-        @include mq($until: tablet) {
+        @include mq($until: desktop) {
             background-color: #bd1e2d;
             color: white;
             fill: white;        
         }
     }
     &[data-category="NatureAndGreenSpaces"] {
-        @include mq($until: tablet) {
+        @include mq($until: desktop) {
             background-color: #00665c;
             color: white;
             fill: white;
         }
     }
     &[data-category="Transport"] {
-        @include mq($until: tablet) {
+        @include mq($until: desktop) {
             background-color: #ff6485;
             color: white;
             fill: white;
@@ -189,7 +183,7 @@ h3 {
 .category-arrow {
     display: none;
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         display: flex;
         align-items: center;
         transition: 0.2s linear;
@@ -197,14 +191,14 @@ h3 {
 }
 
 .filter-list[data-collapsed="true"] {
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         max-height: 0;
         overflow: hidden;
     }
 }
 
 .filter-list[data-collapsed="false"] {
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         padding-bottom: 20px;
     }
 }
@@ -289,34 +283,24 @@ input[type="radio"]:checked::before {
 
 .filter-panel {
     color: black;
-    // transform: translateY(100%);
-    // transition: transform .3s ease;
 
-    @include mq($until: tablet) {
+    @include mq($until: desktop) {
         background-color: white;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.2);
+        cursor: grab;
+        display: flex;
+        flex-direction: column;
         padding: 0;
-        //position: absolute;
-        //min-height: 15dvh;
-        //bottom: 0;
-        //width: 100dvw;
-        z-index: 9999;
-
-        // &:before {
-        //     content: "";
-        //     position: absolute;
-        //     top: 20px;
-        //     left: 15%;
-        //     width: 70%;
-        //     height: 4px;
-        //     background-color: black;
-        //     border-radius: 5px;
-        //     opacity: 0.9;
-        // }
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-height: 85dvh;
+        transition: height 0.25s ease, transform 0.25s ease;
+        touch-action: none;
+        z-index: 99999999;
     }
-
-    // &.open {
-    //     transform: translateY(0);
-    // }
 
     .filter-list[data-collapsed="true"] {
         display: flex;
@@ -324,32 +308,11 @@ input[type="radio"]:checked::before {
     }
 }
 
-
-.filter-panel {
-    @include mq($until: tablet) {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-
-        height: 12dvh;
-        max-height: 85dvh;
-
-        background: white;
-        border-radius: 16px 16px 0 0;
-
-        box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.2);
-
-        // display: flex;
-        // flex-direction: column;
-
-        transition: height 0.25s ease, transform 0.25s ease;
-
-        touch-action: none;
-
-        //padding-bottom: env(safe-area-inset-bottom);
-        z-index: 99999999;
-    }
+.filter-panel__categories {
+    flex: 1;
+    overflow-y: auto;
+    // overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
 .sheet-dragging {
@@ -357,21 +320,21 @@ input[type="radio"]:checked::before {
 }
 
 .sheet-header {
-    @include mq($until: tablet) {
-        padding: 20px 20px 0 20px;
-        height: 6dvh;
-        cursor: grab;
+    @include mq($until: desktop) {
+        padding-top: 20px;
     }
 
     &:before {
-        @include mq($until: tablet) {
+        @include mq($until: desktop) {
             content: "";
             position: absolute;
             top: 20px;
-            left: 15%;
-            width: 70%;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 20%;
             height: 4px;
-            background-color: black;
+            background-color: #ccc;
             border-radius: 5px;
             opacity: 0.9;
         }
@@ -379,10 +342,10 @@ input[type="radio"]:checked::before {
 }
 
 .sheet-content {
-    @include mq($until: tablet) {
+    @include mq($until: desktop) {
         overflow-y: auto;
         flex: 1;
-        padding: 20px;
+        padding: 20px 30px;
     }
 }
 
