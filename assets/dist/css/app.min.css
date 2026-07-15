@@ -371,6 +371,7 @@ address {
 .main--map {
   display: grid;
   grid-template-columns: 1fr;
+  height: 100%;
 }
 @media (max-width: 79.99em) {
   .main--map {
@@ -741,6 +742,8 @@ input[type=radio]:checked::before {
           flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  -ms-touch-action: pan-y;
+      touch-action: pan-y;
 }
 
 .sheet-dragging {
