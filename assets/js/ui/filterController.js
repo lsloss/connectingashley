@@ -1,8 +1,25 @@
+import { FeatureGroup } from "leaflet";
+
 export function createFilterController(mapState) {
   const { map, markers, routes } = mapState;
 
   function show(category, subcategory) {
-    markers[category]?.[subcategory]?.forEach(m => m.addTo(map));
+    const selectedMarkers = markers[category]?.[subcategory];
+
+    if (!selectedMarkers) return;
+
+    selectedMarkers.forEach(m => m.addTo(map));
+
+    const group = new FeatureGroup(selectedMarkers);
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+    map.fitBounds(group.getBounds(), {
+      paddingTopLeft: [40, 40],
+      paddingBottomRight: isMobile
+        ? [40, window.innerHeight * 0.40]
+        : [40, 40],
+      maxZoom: 17
+    });
   }
 
   function hide(category, subcategory) {

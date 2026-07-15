@@ -2,10 +2,9 @@ import { buildCategoryGroup } from './builders/buildCategoryGroup';
 import { buildSubcategoryList } from './builders/buildSubcategoryList';
 import { buildRouteList } from './builders/buildRouteList';
 
-export function initMobileTabs(mapState, controller, bottomSheetAPI) {
+export function initMobileTabs(mapState, controller, bottomSheetAPI, panel) {
     const { filters, config } = mapState;
     const container = document.getElementById("map-filters");
-    const panel = document.getElementById("filter-categories");
 
     // -------------------------
     // Routes tab

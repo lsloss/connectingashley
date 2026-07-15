@@ -60,6 +60,8 @@ export function createRouteSystem(geojson, map) {
           ${props.credit ? `<p>Credit: ${props.creditURl ? `<a href="${props.creditURl}" target="_blank" rel="noopener noreferrer">${props.credit}</a>` : props.credit }</p>` : ''}
         `;
 
+        layer.popupContent = popupContent;
+
       if (props.name) {
         layer.bindPopup(popupContent, { className: 'route-popup' });
       }
@@ -90,6 +92,8 @@ export function createRouteSystem(geojson, map) {
         { icon }
       );
 
+      marker.popupContent = popupContent;
+
       if (props.name) {
         marker.bindPopup(popupContent);
       }
@@ -108,8 +112,13 @@ export function createRouteSystem(geojson, map) {
 
       layer.addTo(map);
 
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
       map.fitBounds(layer.getBounds(), {
-        padding: [40, 40],
+        paddingTopLeft: [40, 40],
+        paddingBottomRight: isMobile
+          ? [40, window.innerHeight * 0.40]
+          : [40, 40],
         maxZoom: 17
       });
 

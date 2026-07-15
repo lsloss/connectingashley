@@ -1,8 +1,8 @@
 export function initBottomSheet(map) {
     const sheet = document.getElementById("filter-panel");
     const header = document.getElementById("sheet-header");
-    const minHeight = window.innerHeight * 0.12; // collapsed
-    const midHeight = window.innerHeight * 0.55; // peek
+    const minHeight = window.innerHeight * 0.10; // collapsed
+    const midHeight = window.innerHeight * 0.40; // peek
     const maxHeight = window.innerHeight * 0.9; // full
     const DRAG_THRESHOLD = 6;
 
@@ -24,7 +24,7 @@ export function initBottomSheet(map) {
         const current = sheet.getBoundingClientRect().height;
 
         // already near mid → do nothing
-        if (Math.abs(current - midHeight) < 40) return;
+        if (Math.abs(current - midHeight) < 25) return;
 
         setHeight(midHeight);
     }
@@ -103,12 +103,10 @@ export function initBottomSheet(map) {
     header.addEventListener("touchstart", (e) => {
         e.preventDefault();
         onStart(e.touches[0].clientY);
-        console.log("touchstart", e.touches[0].clientY);
     });
 
     header.addEventListener("touchmove", (e) => {
         onMove(e.touches[0].clientY);
-        console.log("touchmove", e.touches[0].clientY);
     });
 
     header.addEventListener("touchend", onEnd);
@@ -128,8 +126,19 @@ export function initBottomSheet(map) {
         window.addEventListener("mouseup", up);
     });
 
+    let popupOpening = false;
+
+    function setPopupOpening(value) {
+        popupOpening = value;
+    }
+
     // TAP OUTSIDE TO COLLAPSE
     document.addEventListener("click", (e) => {
+         if (popupOpening) {
+            popupOpening = false;
+            return;
+        }
+
         const clickedInsideMap = e.target.closest("#map");
         const clickedInsideSheet = sheet.contains(e.target);
 
@@ -150,6 +159,7 @@ export function initBottomSheet(map) {
 
     return {
         expandToMid,
-        setHeight
+        setHeight,
+        setPopupOpening
     };
 }
