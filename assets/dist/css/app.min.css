@@ -159,6 +159,10 @@ body.home {
   grid-template-rows: 1fr 1fr;
 }
 
+body.page-template-map {
+  overscroll-behavior-y: contain;
+}
+
 .home .main {
   grid-column: 1;
   grid-row: 1/3;
