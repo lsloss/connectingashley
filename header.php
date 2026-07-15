@@ -17,7 +17,7 @@
 <head>
 	<meta charset="<?php bloginfo('charset'); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="<?php echo get_the_excerpt(); ?>">
+	<meta name="description" content="Discover the Ashley Ward in Bristol with our interactive map.">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
 	<?php wp_head(); ?>
@@ -28,7 +28,7 @@
 
 	<header class="site-header">
 		<?php if (is_front_page()) : ?>
-			<h1 class="site-header__title"><a class="site-header__link" href="<?php echo esc_url(home_url('/')); ?>" rel="home">Connecting <span>Ashley</span></a></h1>
+			<h1 class="site-header__title"><a class="site-header__link" href="<?php echo esc_url(home_url('/')); ?>" rel="home">Connecting <span>Ashley</span><span class="screen-reader-text"> Bristol, UK</span></a></h1>
 		<?php else : ?>
 			<h2 class="site-header__title"><a class="site-header__link" href="<?php echo esc_url(home_url('/')); ?>" rel="home">Connecting <span>Ashley</span></a></h2>
 		<?php endif; ?>

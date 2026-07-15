@@ -1,16 +1,7 @@
-# Connecting Ashley Theme - A starter theme for all Studio Mothership's Wordpress Themes
+# Connecting Ashley Theme - A theme for the Connecting Ashley Map
 
-## Pagination
-Pagination template tags can be found in the functions.php file
+## Leaflet
 
-### Previous / Next Pagination Links
-Adds Previous and Next navigation links
-````
-<?php prev_next_pagination(); ?>
-````
+## Papaparse
 
-### Numbered Pagination Links
-Adds numbered navigation links
-````
-<?php numbered_pagination(); ?>
-````
+## Mapbox
