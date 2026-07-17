@@ -1,6 +1,6 @@
 @use "../vars/variables" as *;
 @use "../mixins" as *;
-@use 'sass-mq' as * with ($breakpoints: (desktop: 1280px));
+@use 'sass-mq' as *;
 
 .main--map {
     display: grid;
