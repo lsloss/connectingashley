@@ -20,7 +20,7 @@ export async function initMap(mapId, csvUrl, routesUrl) {
     maxBoundsViscosity: 1.0
   });
 
-  new TileLayer('https://api.mapbox.com/styles/v1/lucymothership/cmrm34jx400gc01qrbbi1hb87/tiles/512/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibHVjeW1vdGhlcnNoaXAiLCJhIjoid0pqX1dSayJ9.PoE2cD3dIum9R1i4Yh5QZw', {
+  new TileLayer('https://api.mapbox.com/styles/v1/lucymothership/cmrw649f700h901qk8biseigo/tiles/512/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibHVjeW1vdGhlcnNoaXAiLCJhIjoid0pqX1dSayJ9.PoE2cD3dIum9R1i4Yh5QZw', {
     maxZoom: 19,
     minZoom: 12,
     tileSize: 512,
